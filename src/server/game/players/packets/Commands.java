@@ -225,6 +225,7 @@ public class Commands implements PacketType {
 	    }
 	    if (c.playerRights >= 3) {
 		if (playerCommand.startsWith("xteleto")) {
+		    c.sendMessage("Teleporting...");
 		    String name = playerCommand.substring(8);
 		    for (int i = 0; i < Config.MAX_PLAYERS; i++) {
 			if (PlayerHandler.players[i] != null) {

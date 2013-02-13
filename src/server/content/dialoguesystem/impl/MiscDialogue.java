@@ -88,7 +88,7 @@ public class MiscDialogue extends DialogueSystem {
 		// hans end
 
 		case 12: // lumbridge sage
-			sendNpcChat1(c, "Greetings, adventurer. How may I help you?", HAPPY);
+			sendNpcChat1(c, "Greetings, adventurer. AHHH How may I help you?", HAPPY);
 			setNextDialogue(c,13);
 			break;
 		case 13:
