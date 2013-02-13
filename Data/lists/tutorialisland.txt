@@ -1,0 +1,20 @@
+/*
+ * List and other shit:
+ * ActionHandler.sendInterfaceConfig(player, 371, 4, false); removes arrows
+ * Interface Ids
+ * 371 - Tutorial Island progress
+   372 - 4 lines, blue title
+   421 - 16 lines, blue title, scroll bar
+ * 
+ */
+ 
+ Npc ids
+ 942 - Master chef
+943 - Survival expert 
+944 - Combat instructor
+945 - RuneScape guide
+946 - Magic instructor
+947 - Financial advisor
+948 - Mining instructor
+949 - Quest guide
+
