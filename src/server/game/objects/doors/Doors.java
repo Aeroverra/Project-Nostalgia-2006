@@ -225,7 +225,9 @@ public class Doors {
 	}
 
 	private final void processLineByLine() throws FileNotFoundException {
+	    	doors.clear();
 		Scanner scanner = new Scanner(new FileReader(doorFile));
+		
 		try {
 			while(scanner.hasNextLine()) {
 				processLine(scanner.nextLine());

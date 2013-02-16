@@ -254,7 +254,6 @@ public class Client extends Player {
 		}
 
 	}
-
 	public void initialize() {
 	    String IP = ((InetSocketAddress) getSession().getRemoteAddress()).getAddress().getHostAddress();
 	    Connection.addIpToLoginList(IP);

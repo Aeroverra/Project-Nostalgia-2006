@@ -13,6 +13,8 @@ import server.content.music.Music;
 import server.content.quests.misc.Tutorialisland;
 import server.content.randoms.MimeEvent;
 import server.game.objects.Objects;
+import server.game.objects.doors.Doors;
+import server.game.objects.doors.DoubleDoors;
 import server.game.players.Client;
 import server.game.players.PacketType;
 import server.game.players.Player;
@@ -386,6 +388,11 @@ public class Commands implements PacketType {
 		if (playerCommand.startsWith("empty")) {
 		    c.getItems().removeAllItems();
 		    c.sendMessage("You empty your inventory");
+		}
+		if(playerCommand.startsWith("reloaddoors")){
+		    	Doors.getSingleton().load();
+			DoubleDoors.getSingleton().load();
+			c.sendMessage("Doors successfully reloaded!");
 		}
 		if (playerCommand.startsWith("master")) {	
 			c.getPA().addSkillXP((15000000), 0);

@@ -35,6 +35,7 @@ public class DoubleDoors {
     }
 
     private DoubleDoors getDoor(int id, int x, int y, int z) {
+	System.out.println("Getting door with ID "+id+" x:"+x+" y:"+y+" z:"+z);
         for (DoubleDoors d : doors) {
             if (d.doorId == id) {
                 if (d.x == x && d.y == y && d.z == z) {
@@ -44,8 +45,155 @@ public class DoubleDoors {
         }
         return null;
     }
-
+    private DoubleDoors getDoor(int x, int y, int z) {
+	
+        for (DoubleDoors d : doors) {
+          
+                if (d.x == x && d.y == y && d.z == z) {
+                    return d;
+                
+            }
+        }
+        return null;
+    }
     public boolean handleDoor(int id, int x, int y, int z) {
+   	System.out.println("Trying to handle door...");
+           DoubleDoors doorClicked = getDoor(id, x, y, z);
+
+           if (doorClicked == null) {
+               return false;
+           }
+           if (doorClicked.doorId > 12000 && doorClicked.doorId != 4427 && doorClicked.doorId != 4428) {
+               return true; //nearly all of these are not opened
+           }
+           System.out.println("Case "+doorClicked.open);
+           switch (doorClicked.open) {
+               case 0:
+           	System.out.println("Caase "+doorClicked.originalFace);
+                   switch (doorClicked.originalFace) {
+                   
+                       case 0: {
+                   	System.out.println("b");
+                           DoubleDoors lowerDoor = getDoor( x, y - 1, z);
+                           DoubleDoors upperDoor = getDoor(x, y + 1, z);
+                           if (lowerDoor != null) {
+                               System.out.println("pt 1"); 
+                               changeLeftDoor(lowerDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (upperDoor != null) {
+                               System.out.println("pt 2"); 
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(upperDoor);
+                           }else{
+                               lowerDoor = getDoor(x, y - 1, z);
+                               upperDoor = getDoor(x, y + 1, z);  
+                               if (lowerDoor != null) {
+                                   changeLeftDoor(lowerDoor);
+                                   changeRightDoor(doorClicked);
+                               } else if (upperDoor != null) {
+                                   changeLeftDoor(doorClicked);
+                                   changeRightDoor(upperDoor);
+                               }
+                           }
+                           System.out.println("a");
+                           break;
+                       }
+                       case 1: {
+                           DoubleDoors westDoor = getDoor(x - 1, y, z);
+                           DoubleDoors eastDoor = getDoor(x + 1, y, z);
+                           if (westDoor != null) {
+                               changeLeftDoor(westDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (eastDoor != null) {
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(eastDoor);
+                           }
+                           break;
+                       }
+                       case 2: {
+                           DoubleDoors lowerDoor = getDoor(x, y + 1, z);
+                           DoubleDoors upperDoor = getDoor(x, y - 1, z);
+                           if (lowerDoor != null) {
+                               changeLeftDoor(lowerDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (upperDoor != null) {
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(upperDoor);
+                           }
+                           break;
+                       }
+                       case 3: {
+                           DoubleDoors westDoor = getDoor(x - 1, y, z);
+                           DoubleDoors eastDoor = getDoor( x + 1, y, z);
+                           if (westDoor != null) {
+                               changeLeftDoor(westDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (eastDoor != null) {
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(eastDoor);
+                           } 
+                           break;
+                       }
+                   }
+                   break;
+               case 1:
+                   switch (doorClicked.originalFace) {
+                       case 0: {
+                           DoubleDoors westDoor = getDoor(x - 1, y, z);
+                           DoubleDoors upperDoor = getDoor( x + 1, y, z);
+                           if (westDoor != null) {
+                               changeLeftDoor(westDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (upperDoor != null) {
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(upperDoor);
+                           }
+                           break;
+                       }
+                       case 1: {
+                           DoubleDoors northDoor = getDoor( x, y + 1, z);
+                           DoubleDoors southDoor = getDoor(x, y - 1, z);
+                           if (northDoor != null) {
+                               changeLeftDoor(northDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (southDoor != null) {
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(southDoor);
+                           }
+                           break;
+                       }
+                       case 2: {
+                           DoubleDoors westDoor = getDoor(x - 1, y, z);
+                           DoubleDoors eastDoor = getDoor(x, y - 1, z);
+                           if (westDoor != null) {
+                               changeLeftDoor(westDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (eastDoor != null) {
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(eastDoor);
+                           }
+                           break;
+                       }
+                       case 3: {
+                           DoubleDoors northDoor = getDoor(x, y + 1, z);
+                           DoubleDoors southDoor = getDoor(x, y - 1, z);
+                           if (northDoor != null) {
+                               changeLeftDoor(northDoor);
+                               changeRightDoor(doorClicked);
+                           } else if (southDoor != null) {
+                               changeLeftDoor(doorClicked);
+                               changeRightDoor(southDoor);
+                           }
+                           break;
+                       }
+                   }
+                   break;
+           }
+           System.out.println("Done!");
+           return true;
+       }
+  /*OLD DOOR LOADING METHOD, INCASE SHIT GOES WRONG  public boolean handleDoor(int id, int x, int y, int z) {
+	System.out.println("Trying to handle door...");
         DoubleDoors doorClicked = getDoor(id, x, y, z);
 
         if (doorClicked == null) {
@@ -54,19 +202,36 @@ public class DoubleDoors {
         if (doorClicked.doorId > 12000 && doorClicked.doorId != 4427 && doorClicked.doorId != 4428) {
             return true; //nearly all of these are not opened
         }
+        System.out.println("Case "+doorClicked.open);
         switch (doorClicked.open) {
             case 0:
+        	System.out.println("Caase "+doorClicked.originalFace);
                 switch (doorClicked.originalFace) {
+                
                     case 0: {
+                	System.out.println("b");
                         DoubleDoors lowerDoor = getDoor(id - 3, x, y - 1, z);
                         DoubleDoors upperDoor = getDoor(id + 3, x, y + 1, z);
                         if (lowerDoor != null) {
+                            System.out.println("pt 1"); 
                             changeLeftDoor(lowerDoor);
                             changeRightDoor(doorClicked);
                         } else if (upperDoor != null) {
+                            System.out.println("pt 2"); 
                             changeLeftDoor(doorClicked);
                             changeRightDoor(upperDoor);
+                        }else{
+                            lowerDoor = getDoor(id - 5, x, y - 1, z);
+                            upperDoor = getDoor(id + 5, x, y + 1, z);  
+                            if (lowerDoor != null) {
+                                changeLeftDoor(lowerDoor);
+                                changeRightDoor(doorClicked);
+                            } else if (upperDoor != null) {
+                                changeLeftDoor(doorClicked);
+                                changeRightDoor(upperDoor);
+                            }
                         }
+                        System.out.println("a");
                         break;
                     }
                     case 1: {
@@ -102,7 +267,7 @@ public class DoubleDoors {
                         } else if (eastDoor != null) {
                             changeLeftDoor(doorClicked);
                             changeRightDoor(eastDoor);
-                        }
+                        } 
                         break;
                     }
                 }
@@ -160,8 +325,9 @@ public class DoubleDoors {
                 }
                 break;
         }
+        System.out.println("Done!");
         return true;
-    }
+    }*/
 
     public void changeLeftDoor(DoubleDoors d) {
         int xAdjustment = 0, yAdjustment = 0;
@@ -391,6 +557,7 @@ public class DoubleDoors {
     }
 
     private void processLineByLine() throws FileNotFoundException {
+	doors.clear();
         Scanner scanner = new Scanner(new FileReader(doorFile));
         try {
             while(scanner.hasNextLine()) {
@@ -412,6 +579,8 @@ public class DoubleDoors {
                 int f = Integer.parseInt(scanner.next());
                 int z = Integer.parseInt(scanner.next());
                 doors.add(new DoubleDoors(id, x, y, z, f, isOpenDoor(id) ? 1 : 0));
+                
+                System.out.println("Loaded door ID:" +id+" x:"+x+" y:"+y+" z:"+z+" dir:"+f);
             }
         } finally {
             scanner.close();
